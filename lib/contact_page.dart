@@ -4,47 +4,55 @@ class ContactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'تواصل معنا',
-            style: TextStyle(color: Colors.black),
-          ),
-          backgroundColor: Colors.white,
-          centerTitle: true,
-          iconTheme: IconThemeData(color: Colors.black),
+      appBar: AppBar(
+        title: Text(
+          'تواصل معنا',
+          style: TextStyle(color: Colors.black),
         ),
-        body: Center(
-          child: GridView.count(crossAxisCount: 1, children: [
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
+      body: Center(
+        child: GridView.count(
+          crossAxisCount: 1,
+          children: [
             buildContactCard(
               'محمد مرهف العكلة',
-              '+316914265871',
-              'https://www.facebook.com/Mohamad Okla',
-              'https://www.instagram.com/mohamad__okla/',
-            )
-          ]),
-        ));
+              'lib/asset/me.png',
+            ),
+            buildContactCard(
+              'محمد سعد العوض',
+              'lib/asset/saad.png',
+            ),
+            buildContactCard(
+              'محمد احمد الحمود',
+              'lib/asset/aslan.png',
+            ),
+            buildContactCard(
+              'محمد السحل',
+              'lib/asset/mep.png',
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
-  Widget buildContactCard(String name, String phoneNumber, String facebookUrl,
-      String instagramUrl) {
+  Widget buildContactCard(String name, String imagePath) {
     return Card(
       elevation: 4,
-      margin: EdgeInsets.all(16),
+      margin: EdgeInsets.all(10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
             radius: 50,
+            backgroundImage: AssetImage(imagePath),
           ),
-          SizedBox(height: 20),
           Text(
             name,
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 10),
-          Text(
-            phoneNumber,
-            style: TextStyle(fontSize: 18, color: Colors.grey),
           ),
           SizedBox(height: 20),
           Row(
@@ -52,18 +60,10 @@ class ContactPage extends StatelessWidget {
             children: [
               IconButton(
                 icon: Icon(Icons.facebook),
-                onPressed: () {
-
-                },
+                onPressed: () {},
                 color: Colors.blue,
               ),
-              IconButton(
-                icon: Icon(Icons.home),
-                onPressed: () {
-
-                },
-                color: Colors.orange,
-              ),
+              IconButton(onPressed: () {}, icon: Icon(Icons.call_outlined))
             ],
           ),
         ],

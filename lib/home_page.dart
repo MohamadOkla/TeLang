@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "مرحبا بك",
+                    "TeLang",
                     style: TextStyle(fontSize: 24, color: Colors.black),
                   ),
                 ],
@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
         ListTile(
           title: Text(
             title,
-            style: const TextStyle(fontSize: 24, color: Colors.black ),
+            style: const TextStyle(fontSize: 24, color: Colors.black),
             textDirection: TextDirection.rtl,
           ),
           onTap: onTap,
@@ -141,31 +141,31 @@ class _HomePageState extends State<HomePage> {
       BuildContext context, String title, String subtitle, Widget page) {
     return Container(
         child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => page),
-            );
-          },
-          child: Card(
-            color: Colors.blue[100],
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ListTile(
-                  title: Text(
-                    title,
-                    style: TextStyle(fontSize: 24),
-                    textAlign: TextAlign.center,
-                  ),
-                  subtitle: Text(
-                    subtitle,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => page),
+        );
+      },
+      child: Card(
+        color: Colors.blue[100],
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ListTile(
+              title: Text(
+                title,
+                style: TextStyle(fontSize: 24),
+                textAlign: TextAlign.center,
+              ),
+              subtitle: Text(
+                subtitle,
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-        ));
+          ],
+        ),
+      ),
+    ));
   }
 }

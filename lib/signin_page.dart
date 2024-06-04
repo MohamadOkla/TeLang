@@ -1,6 +1,6 @@
-import 'package:app/login_page.dart';
 import 'package:flutter/material.dart';
 import 'home_page.dart';
+import 'login_page.dart';
 
 class SigninPage extends StatefulWidget {
   const SigninPage({Key? key});
@@ -17,23 +17,91 @@ class _SigninPageState extends State<SigninPage> {
       TextEditingController();
   bool isPasswordMatch = false;
 
+  void _signUp() {
+    if (usernameController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        confirmPasswordController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('خطأ'),
+            content: Text('الرجاء ملء جميع الحقول'),
+            actions: [
+              TextButton(
+                child: Text('حسناً'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else if (!isPasswordMatch) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('خطأ'),
+            content: Text('كلمات المرور غير متطابقة'),
+            actions: [
+              TextButton(
+                child: Text('حسناً'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        _create3DPageRoute(Login()),
+      );
+    }
+  }
+
+  PageRouteBuilder _create3DPageRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = 0.0;
+        const end = -1.0; // Changed to -1.0 for -180 degree rotation
+        const curve = Curves.easeInOut;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return RotationTransition(
+          turns: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.blue[50],
-          ),
-          body: Container(
-            color: Colors.blue[50],
-            padding: EdgeInsets.all(16),
-            child: ListView(children: [
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blue[50],
+        ),
+        body: Container(
+          color: Colors.blue[50],
+          padding: EdgeInsets.all(16),
+          child: ListView(
+            children: [
               Container(
                 height: 100,
                 child: Center(
                   child: Text(
-                    "إنشاء حساب ",
+                    "إنشاء حساب",
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -120,12 +188,10 @@ class _SigninPageState extends State<SigninPage> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      if (isPasswordMatch) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
-                        );
-                      }
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
@@ -137,7 +203,7 @@ class _SigninPageState extends State<SigninPage> {
                       ),
                     ),
                     child: Text(
-                      ' إنشاء حساب',
+                      'إنشاء حساب',
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
@@ -146,23 +212,39 @@ class _SigninPageState extends State<SigninPage> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
-              TextButton(
+              SizedBox(height: 10),
+              ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.blue[50]),
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => Login()),
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          Login(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        const begin = 0.0;
+                        const end = -1.0;
+                        const curve = Curves.easeInOut;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+
+                        return RotationTransition(
+                          turns: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    ),
                   );
                 },
-                child: Text(
-                  "اذهب الى صفحة تسجيل الدخول",
-                  style: TextStyle(color: Colors.blue),
-                ),
+                child: Text("صفحة تسجيل الدخول"),
               ),
-            ]),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

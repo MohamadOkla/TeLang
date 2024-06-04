@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'signin_page.dart';
- 
+
 class Login extends StatefulWidget {
   const Login({Key? key});
 
@@ -20,7 +20,22 @@ class _LoginState extends State<Login> {
     if (email == "telang@gmail.com" && password == "1234") {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = 0.0;
+            const end = 1.0;
+            const curve = Curves.easeInOut;
+
+            var tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+            return RotationTransition(
+              turns: animation.drive(tween),
+              child: child,
+            );
+          },
+        ),
       );
     } else {
       showDialog(
@@ -122,9 +137,7 @@ class _LoginState extends State<Login> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 50,
-              ),
+              SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -132,7 +145,25 @@ class _LoginState extends State<Login> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SigninPage()),
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  SigninPage(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            const begin = 0.0;
+                            const end = 1.0;
+                            const curve = Curves.easeInOut;
+
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+
+                            return RotationTransition(
+                              turns: animation.drive(tween),
+                              child: child,
+                            );
+                          },
+                        ),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -144,7 +175,7 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     child: Text(
-                      'إنشاء حساب ',
+                      'إنشاء حساب',
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
